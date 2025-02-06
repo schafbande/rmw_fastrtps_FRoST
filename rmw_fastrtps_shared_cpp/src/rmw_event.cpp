@@ -21,6 +21,15 @@
 #include "rmw_fastrtps_shared_cpp/rmw_common.hpp"
 #include "types/event_types.hpp"
 
+  // ===================================================
+  /*
+  * FRoST Implementation of Ownership QoS
+  * -------------------------------------
+  * is an RMW_EVENT_OWNERSHIP_STRENGTH_CHANGED necessary/neeeded?
+  * Propably not since there is no event in underlying ePRosima
+  * DDS implementation
+  */
+ // ===================================================
 static const std::unordered_set<rmw_event_type_t> g_rmw_event_type_set{
   RMW_EVENT_LIVELINESS_CHANGED,
   RMW_EVENT_REQUESTED_DEADLINE_MISSED,
@@ -78,6 +87,12 @@ eprosima::fastdds::dds::StatusMask rmw_event_to_dds_statusmask(
     case RMW_EVENT_PUBLICATION_MATCHED:
       ret_statusmask = eprosima::fastdds::dds::StatusMask::publication_matched();
       break;
+    // ===================================================
+    /*
+    * FRoST Implementation of Ownership QoS
+    * -------------------------------------
+    * 
+    */
     default:
       break;
   }
@@ -109,6 +124,17 @@ rmw_qos_policy_kind_t dds_qos_policy_to_rmw_qos_policy(
       return RMW_QOS_POLICY_HISTORY;
     case QosPolicyId_t::LIFESPAN_QOS_POLICY_ID:
       return RMW_QOS_POLICY_LIFESPAN;
+    // ===================================================
+    /*
+    * FRoST Implementation of Ownership QoS
+    * -------------------------------------
+    * 
+    */
+    case QosPolicyId_t::OWNERSHIP_QOS_POLICY_ID:
+      return RMW_QOS_POLICY_OWNERSHIP;
+    case QosPolicyId_t::OWNERSHIPSTRENGTH_QOS_POLICY_ID:
+      return RMW_QOS_POLICY_OWNERSHIP_STRENGTH;
+    // ===================================================   
     default:
       return RMW_QOS_POLICY_INVALID;
   }
