@@ -30,7 +30,18 @@ TEST(TestQoSProfileCheckCompatible, compatible)
     {1, 0},   // lifespan
     RMW_QOS_POLICY_LIVELINESS_AUTOMATIC,
     {1, 0},   // liveliness lease duration
-    false  // avoid_ros_namespace_conventions
+    false,  // avoid_ros_namespace_conventions
+    // ===================================================
+    /*
+    * FRoST Implementation of Ownership QoS
+    * -------------------------------------
+    * for all test cases: default ownership (shared) and no strength
+    */
+    // ownership implementation
+    RMW_QOS_POLICY_OWNERSHIP_SYSTEM_DEFAULT,  //default ownership (propably shared)
+    // no ownership strength
+    0
+    // ===================================================
   };
 
   rmw_qos_compatibility_type_t compatibility;
@@ -55,7 +66,18 @@ TEST(TestQoSProfileCheckCompatible, incompatible)
     {1, 0},   // lifespan
     RMW_QOS_POLICY_LIVELINESS_AUTOMATIC,
     {1, 0},   // liveliness lease duration
-    false  // avoid_ros_namespace_conventions
+    false,  // avoid_ros_namespace_conventions
+    // ===================================================
+    /*
+    * FRoST Implementation of Ownership QoS
+    * -------------------------------------
+    * for all test cases: default ownership (shared) and no strength
+    */
+    // ownership implementation
+    RMW_QOS_POLICY_OWNERSHIP_SYSTEM_DEFAULT,
+    // no ownership strength
+    0
+    // ===================================================
   };
 
   rmw_qos_profile_t sub_profile = pub_profile;
@@ -83,7 +105,18 @@ TEST(TestQoSProfileCheckCompatible, warn_compatible)
     {1, 0},   // lifespan
     RMW_QOS_POLICY_LIVELINESS_AUTOMATIC,
     {1, 0},   // liveliness lease duration
-    false  // avoid_ros_namespace_conventions
+    false,  // avoid_ros_namespace_conventions
+    // ===================================================
+    /*
+    * FRoST Implementation of Ownership QoS
+      * -------------------------------------
+    * for all test cases: default ownership (shared) and no strength
+    */
+    // ownership implementation
+    RMW_QOS_POLICY_OWNERSHIP_SYSTEM_DEFAULT,
+    // no ownership strength
+    0
+    // ===================================================
   };
 
   rmw_qos_profile_t sub_profile = pub_profile;
