@@ -146,6 +146,35 @@ bool fill_entity_qos_from_profile(
     entity_qos.liveliness().announcement_period = eprosima::fastrtps::Duration_t(period_in_s);
   }
 
+  // ===================================================
+  /*
+  * FRoST Implementation of Ownership QoS
+  * -------------------------------------
+  * link eProsima DDS Ownership QoS to rmw
+  */
+  switch (qos_policies.ownership)  {
+  case RMW_QOS_POLICY_OWNERSHIP_SHARED:
+    entity_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS;
+    break;
+  case RMW_QOS_POLICY_OWNERSHIP_EXCLUSIVE:
+    entity_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS;
+    break;
+  case RMW_QOS_POLICY_OWNERSHIP_SYSTEM_DEFAULT:
+    break;
+  default:
+    RMW_SET_ERROR_MSG("Unknown QoS Ownership Policy.");
+    return false;
+  }
+
+  /*
+  // if exclusive ownership has been set
+  if(qos_policies.ownership == RMW_QOS_POLICY_OWNERSHIP_EXCLUSIVE) {
+    entity_qos.ownership_strength().value = static_cast<int32_t>(qos_policies.ownership_strength);
+  }
+  */
+
+  // ===================================================
+
   return true;
 }
 
